@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--namespace表示命名空间  -->
+<mapper namespace="com.model.Mark">
+	<select id="getList"  resultType="com.model.Mark">
+		select * from mark 
+	</select>
+	<insert id="addMark" parameterType="com.model.Mark" keyProperty="id" useGeneratedKeys="true" >
+		insert into mark(username,paper_id,mark) values (#{username},#{paper_id},#{mark})	
+	</insert>
+	<select id="findByUserName" resultType="com.model.Mark" parameterType="String">
+		select * from mark where username like concat('%',#{paperName},'%')
+	</select>
+	<select id="findByPaperId" parameterType="List"
+		resultType="com.model.Mark">
+		select * from mark where paper_id in
+		<foreach item="paper_id" index="" collection="list" open="("
+			separator="," close=")">
+			#{paper_id}
+		</foreach>
+	</select>
+</mapper>

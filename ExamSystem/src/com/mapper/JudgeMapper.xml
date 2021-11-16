@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--namespace表示命名空间  -->
+<mapper namespace="com.model.Judge">
+	<insert id="addJudge" parameterType="com.model.Judge" keyProperty="id" useGeneratedKeys="true" >
+		insert into exam_judge(questionText,answer,score) values (#{questionText},#{answer},#{score})	
+	</insert>
+	<select id="getList" resultType="com.model.Judge">
+		select * from exam_Judge
+	</select>
+	<select id="findJudgeByQuestionText"
+		parameterType="String" resultType="com.model.Judge">
+		select * from exam_judge where questionText like concat('%',#{questionText},'%')
+	</select>
+	
+	<update id="updateJudge" parameterType="com.model.Judge">
+		update exam_judge set questionText=#{questionText},answer=#{answer},score=#{score} where id=#{id}
+	</update>
+	<select id="findById" resultType="com.model.Judge" parameterType="Integer">
+		select * from exam_judge where id = #{id}
+	</select>
+	<delete id="deleteJudge" parameterType="Integer">
+		delete from exam_judge where id=#{id}
+	</delete>
+	<select id="addJudgePaperA"
+		 resultType="com.model.Judge">
+		select * from exam_judge ORDER BY  RAND() LIMIT 15
+	</select>
+	<select id="addJudgePaperB"
+		 resultType="com.model.Judge">
+		select * from exam_judge ORDER BY  RAND() LIMIT 10
+	</select>
+	<select id="addJudgePaperC"
+		 resultType="com.model.Judge">
+		select * from exam_judge ORDER BY  RAND() LIMIT 5
+	</select>
+	<select id="findByIds" parameterType="List"
+		resultType="com.model.Judge">
+		select * from exam_judge where id in
+		<foreach item="id" index="index" collection="list" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+</mapper>

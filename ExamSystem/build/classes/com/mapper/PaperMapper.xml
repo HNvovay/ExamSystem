@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--namespace表示命名空间  -->
+<mapper namespace="com.model.Paper">
+	<insert id="addPaper"  parameterType="com.model.Paper" keyProperty="id" useGeneratedKeys="true" >
+		insert into paper(paperName,schoose_id,judge_id,mchoose_id,state) values (#{paperName},#{schoose_id},#{judge_id},#{mchoose_id},#{state})	
+	</insert>
+	<select id="getList" resultType="com.model.Paper">
+		select * from paper
+	</select>
+	<select id="findPaperByPaperName"
+		parameterType="String" resultType="com.model.Paper">
+		select * from paper where paperName like concat('%',#{paperName},'%')
+	</select>
+	<select id="findById" resultType="com.model.Paper" parameterType="Integer">
+		select * from paper where id = #{id}
+	</select>
+	<update id="updateSchoose" parameterType="com.model.Paper">
+		update paper set schoose_id=#{schoose_id} where id=#{id}
+	</update>
+	<update id="updateMchoose" parameterType="com.model.Paper">
+		update paper set mchoose_id=#{mchoose_id} where id=#{id}
+	</update>
+	<update id="updateJudge" parameterType="com.model.Paper">
+		update paper set judge_id=#{judge_id} where id=#{id}
+	</update>
+	<update id="changeState" parameterType="com.model.Paper">
+		update paper set state=#{state} where id=#{id}
+	</update>
+	<delete id="deletePaper" parameterType="Integer">
+		delete from paper where id=#{id}
+	</delete>
+</mapper>

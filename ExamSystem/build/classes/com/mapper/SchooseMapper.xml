@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--namespace表示命名空间  -->
+<mapper namespace="com.model.Schoose">
+	<insert id="addSchoose" parameterType="com.model.Schoose" keyProperty="id" useGeneratedKeys="true" >
+		insert into exam_schoose(questionText,answer,optionA,optionB,optionC,optionD,score) values (#{questionText},#{answer},#{optionA},#{optionB},#{optionC},#{optionD},#{score})	
+	</insert>
+	<select id="getList" resultType="com.model.Schoose">
+		select * from exam_schoose
+	</select>
+	<select id="findById" resultType="com.model.Schoose" parameterType="Integer">
+		select * from exam_schoose where id = #{id}
+	</select>
+	<update id="updateSchoose" parameterType="com.model.Schoose">
+		update exam_schoose set questionText=#{questionText},answer=#{answer},optionA=#{optionA},optionB=#{optionB},optionC=#{optionC},optionD=#{optionD},score=#{score} where id=#{id}
+	</update>
+	<delete id="deleteSchoose" parameterType="Integer">
+		delete from exam_schoose where id=#{id}
+	</delete>
+	
+	<select id="findSchooseByQuestionText"
+		parameterType="String" resultType="com.model.Schoose">
+		select * from exam_schoose where questionText like concat('%',#{questionText},'%')
+	</select>
+	<select id="addSchoosePaperA"
+		 resultType="com.model.Schoose">
+		select * from exam_schoose ORDER BY  RAND() LIMIT 20
+	</select>
+	<select id="addSchoosePaperB"
+		 resultType="com.model.Schoose">
+		select * from exam_schoose ORDER BY  RAND() LIMIT 10
+	</select>
+	<select id="addSchoosePaperC"
+		 resultType="com.model.Schoose">
+		select * from exam_schoose ORDER BY  RAND() LIMIT 5
+	</select>
+	
+	<select id="findByIds" parameterType="List"
+		resultType="com.model.Schoose">
+		select * from exam_schoose where id in
+		<foreach item="id" index="index" collection="list" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+</mapper>

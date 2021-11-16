@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--namespace表示命名空间  -->
+<mapper namespace="com.model.User">
+	<!--根据客户编号获取客户信息  -->
+	<select id="login" resultType="com.model.User" parameterType="com.model.User">
+		<!-- #{id} 相当于？ -->
+		select * from user where username = #{username} and password=#{password}
+	</select>
+	<update id="updatePassword"  parameterType="com.model.User">
+		update user set password=#{password} where username=#{username}
+	</update>
+	<select id="getListStudent" parameterType="com.model.User" resultType="com.model.Schoose">
+		select * from user where role=#{role}
+	</select>
+</mapper>

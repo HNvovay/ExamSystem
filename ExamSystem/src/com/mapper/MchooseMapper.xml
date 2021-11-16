@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--namespace表示命名空间  -->
+<mapper namespace="com.model.Mchoose">
+	<insert id="addMchoose" parameterType="com.model.Mchoose" keyProperty="id" useGeneratedKeys="true" >
+		insert into exam_mchoose(questionText,answer,optionA,optionB,optionC,optionD,score) values (#{questionText},#{answer},#{optionA},#{optionB},#{optionC},#{optionD},#{score})	
+	</insert>
+	<select id="getList" resultType="com.model.Mchoose">
+		select * from exam_mchoose
+	</select>
+	<update id="updateMchoose" parameterType="com.model.Mchoose">
+		update exam_mchoose set questionText=#{questionText},answer=#{answer},optionA=#{optionA},optionB=#{optionB},optionC=#{optionC},optionD=#{optionD},score=#{score} where id=#{id}
+	</update>
+	<select id="findById" resultType="com.model.Mchoose" parameterType="Integer">
+		select * from exam_mchoose where id = #{id}
+	</select>
+	<select id="findMchooseByQuestionText"
+		parameterType="String" resultType="com.model.Mchoose">
+		select * from exam_mchoose where questionText like concat('%',#{questionText},'%')
+	</select>
+	<delete id="deleteMchoose" parameterType="Integer">
+		delete from exam_mchoose where id=#{id}
+	</delete>
+	<select id="addMchoosePaperA"
+		 resultType="com.model.Mchoose">
+		select * from exam_mchoose ORDER BY  RAND() LIMIT 15
+	</select>
+	<select id="addMchoosePaperB"
+		 resultType="com.model.Mchoose">
+		select * from exam_mchoose ORDER BY  RAND() LIMIT 10
+	</select>
+	<select id="addMchoosePaperC"
+		 resultType="com.model.Mchoose">
+		select * from exam_mchoose ORDER BY  RAND() LIMIT 5
+	</select>
+	<select id="findByIds" parameterType="List"
+		resultType="com.model.Mchoose">
+		select * from exam_mchoose where id in
+		<foreach item="id" index="index" collection="list" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+</mapper>
